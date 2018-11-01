@@ -52,6 +52,7 @@ CREATE TABLE "group_members" (
 );
 
 CREATE TABLE "thesis" (
+  "id" SERIAL PRIMARY KEY,
  "title" VARCHAR(80) NOT NULL,
  "description" VARCHAR(255) NOT NULL
 );

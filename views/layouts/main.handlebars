@@ -199,29 +199,27 @@
     }
 }
 /*  Sidebar Styles  */
-.sidebar {
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: #f1f1f1;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 55px;
+    left: 0;
+    background-color: transparent;
+    overflow-x: hidden;
+  }
+
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+/*    font-size: 25px;*/
+    color:  #4d0033;
+    display: block;
 }
-.sidebar a {
-  display: block;
-  color: black;
-  padding: 16px;
-  text-decoration: none;
-}
- 
-.sidebar a.active {
-  background-color: #1b181a;
-  color: white;
-}
-.sidebar a:hover:not(.active) {
-  background-color: #555;
-  color: white;
+
+.sidenav a:hover {
+    color: #f1f1f1;
 }
 div.content {
   margin-left: 200px;
@@ -271,16 +269,31 @@ div.content {
 </style>
 
 <body>
-<nav class="navbar navbar-inverse navbar-expand-sm navbar-static-top mb-0" style="padding-left: 15pt; margin-bottom:-25pt" role="navigation">
-    <a class="navbar-brand" href="/"><img src="/images/cpe_logo.png" alt="CpE Logo" style="padding:0px; height:30px;" class="d-inline-block align-right"></a>
-    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar3">
-        <span class="navbar-toggle-icon"></span>
-    </button>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="/images/cpe_logo.png" style="height: 50px; width: 50px; padding: 10px auto;">
+    </div>
+    <ul class="nav navbar-nav">
+      <li> <a href="#">ADMIN</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Page 1-1</a></li>
+          <li><a href="#">Page 1-2</a></li>
+          <li><a href="#">Page 1-3</a></li>
+        </ul>
+      </li>
+      <li><a href="#">Page 2</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+    </ul>
+  </div>
 </nav>
 
 </head>
 
-<div class="sidebar" style="padding-top: 30px"  id="sideb">
+<div class="sidenav">
   <h3><a class="side active" href="/admin">Dashboard</a></h3>
   <a class="side" href="/admin/faculty">Faculties</a>
   <a class="side" href="/admin/student">Students</a>

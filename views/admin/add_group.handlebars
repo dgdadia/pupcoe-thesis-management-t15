@@ -1,6 +1,6 @@
 <div class="container-fluid" style="padding: 20px 20px">
   <div class="admin_faculty_header">
-    <h3 style="display: inline-block">ADD CLASS</h3>
+    <h3 style="display: inline-block">ADD GROUP</h3>
     <a href="/admin/classes" style="display:inline-block; float:right"><button class="btn btn-sm ml-auto">&laquo;&ensp;Go back</button></a>
     <hr>
   </div>
@@ -46,13 +46,10 @@
       </div>
 
       <div class="row">
-        <div class="form-group col-md-8">
-          <label><h4>Students</h4></label>
-          <select name="adviser" class="form-control">
-          {{#each students}}
-            <option value="{{this.id}}">{{this.first_name}} {{this.last_name}}</option>
-          {{/each}}
-          </select>
+        <div class="form-group col-md-4">
+          <label>Group Name:</label>
+          <input type="text" name="fname" class="form-control" placeholder="Juan" required="">
+        </div>
         </div>
       </div>
 

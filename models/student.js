@@ -4,17 +4,33 @@ var actions = {
     addProposal: (thesisData,callback) => {
     const query =
     `INSERT INTO 
-      thesis (thesis_title,group_id,current_stage,abstract) 
+      thesis (title,description) 
      VALUES 
-      ('${thesisData.title}',${thesisData.groupid},'1','${thesisData.abstract}')
+      ('${thesisData.title}','${thesisData.description}')
+     RETURNING *
+      `;
+     db.query(query)
+    .then(res => callback(res.rows))
+    .catch(e => {
+      console.log(e)
+      callback(e)
+    })
+  },
+  proposalList: (filter,callback) => {
+    const query =
+    `SELECT 
+      title , description
+    FROM
+      thesis
       `;
      db.query(query)
     .then(res => callback(res))
     .catch(e => {
       console.log(e)
       callback(e)
-    })
-  },
+    });
+
+    },
   studentProfile: (studentData, callback) => {
     const query =
     `SELECT

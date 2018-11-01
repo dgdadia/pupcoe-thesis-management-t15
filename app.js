@@ -43,7 +43,7 @@ app.use(bodyParser.json());
 
 /* ----- Session ----- */
 app.use(session({
-  secret: 'team6secret',
+  secret: 'dadi',
   resave: false,
   saveUninitialized: false
 }));
@@ -308,6 +308,34 @@ app.post('/admin/add_class', function (req, res) {
   });
 });
 
+app.get('/admin/class/:id', function (req, res) {
+  admin.classId({id: req.user.id}, function (classId) {
+    admin.classStudentList({id: req.body.adviser}, function (classStudentList) {
+      admin.noClassList({}, function  (noClassList) {
+        res.render('admin/class_detail', {
+          student_number: req.user.student_number,
+          first_name: req.user.first_name,
+          last_name: req.user.last_name,
+          email: req.user.email,
+          phone: req.user.phone,
+          noClass: noClassList,
+          students: classStudentList
+        });
+      });
+    });
+  });
+});
+
+app.post('/admin/class/:id/addStudent', function (req, res) {
+  admin.insertStudent({
+    student_id: req.body.student_id,
+    class_id: class_id
+  },
+  function(callback) {
+    res.redirect('/admin/class');
+  });
+});
+
 /* -------- GROUP --------- */
 app.get('/admin/group', function (req, res) {
   res.render('admin/list_group', {
@@ -315,9 +343,26 @@ app.get('/admin/group', function (req, res) {
 });
 
 app.get('/admin/add_group', function (req, res) {
-  res.render('admin/add_group', {
-  })
-})
+  admin.createGroup({}, function(createGroup) {
+    res.render('admin/add_group', {
+    batch: req.body.batch,
+    group_name: req.body.group_name,
+    adviser_id: req.body.adviser_id,
+    group: createGroup
+    });
+  });
+});
+
+app.post('/admin/add_class', function (req, res) {
+  admin.createClass({
+    batch: req.body.batch,
+    section: req.body.section,
+    adviser_id: req.body.adviser_id
+  },
+  function(callback) {
+    res.redirect('/admin/group');
+  });
+});
 
 /* ------------------------ FACULTY PAGE ------------------------ */
 app.get('/faculty', function (req, res) {
@@ -386,10 +431,44 @@ app.get('/student', function (req, res) {
 
 
 app.get('/student/group', function (req, res) {
-  res.render('student/group', {
+  res.render('admin/list_group', {
     layout: 'student'
   });
 });
+
+// app.get('/student/thesis', function (req, res) {
+//   res.render('student/thesis', {
+//     layout: 'student'
+//   });
+// });
+
+app.get('/student/thesis', function (req, res) {
+  student.proposalList({}, function(proposalList) {
+    res.render('student/list_thesis', {
+      layout: 'student',
+    title: req.user.title,
+    description: req.user.description,
+    thesis: proposalList
+    });
+  });
+});
+
+app.get('/student/add_thesis', function (req, res) {
+  res.render('student/add_thesis', {
+    layout: 'student'
+  });
+});
+
+app.post('/student/add_thesis', function (req, res) {
+  student.addProposal({
+    title: req.body.title,
+    description: req.body.description
+  },
+  function(callback){
+    res.redirect('/student/thesis');
+  });
+});
+
 
 // Server
 app.listen(port, function () {

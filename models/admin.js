@@ -70,6 +70,20 @@ var actions = {
         console.log(e);
       })
     },
+    createGroup: (groupData,callback) => {
+      const query =
+      `INSERT INTO 
+        group (batch,group_name,adviser_id) 
+       VALUES 
+        ('${groupData.batch}','${groupData.group_name}','${groupData.adviser_id}') 
+       RETURNING *`;
+       db.query(query)
+      .then(res => callback(res.rows))
+      .catch(e => {
+        console.log(e);
+      })
+    },
+
     insertStudent: (userData,callback) => {
     const query =
     `INSERT INTO 
